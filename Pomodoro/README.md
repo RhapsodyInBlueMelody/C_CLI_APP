@@ -1,4 +1,8 @@
 # Welcome to my Pomodoro CLI!!
+  version 0.01v
+
+## TO_DO
+  Make Installer
 
 ## Usage
 
@@ -9,7 +13,12 @@
   
 2. Running the cli
 ```
-  ./<anyoutputname>
+  ./<anyoutputname> <workminute> <breakminute>
+```
+## Example
+```
+ ./pomodoro 25 5
+25 minute work and 5 minutes of break
 ```
 
 ## The reason why i made it ?
