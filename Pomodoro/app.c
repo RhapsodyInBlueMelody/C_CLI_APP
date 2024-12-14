@@ -5,6 +5,11 @@
 #define MINUTE_TO_SECOND 60
 #define SIZE_OF_COMMAND 265
 #define SECOND_INITIAL 0
+#define NOTIF_TITLE "Pomodoro"
+#define BREAK_NOTIF_MSG "Break time! Relax a little."
+#define POMODORO_NOTIF_MSG "Study time begins! Focus up."
+#define START_AUDIO "break.wav"
+#define BREAK_AUDIO "start.wav"
 
 
 // Function prototypes
@@ -34,8 +39,8 @@ void notify(const char* title, const char* message) {
 /*Pomodoro function, for the working invervals */
 int pomodoro(int minute) {
     int second = SECOND_INITIAL;
-    notify("Pomodoro", "Study time begins! Focus up.");
-    playSound("start.wav");
+    notify(NOTIF_TITLE,POMODORO_NOTIF_MSG);
+    playSound(START_AUDIO);
     while(second != -1) {
         clearScreen();
         printf("Study time begins! Focus up ᕙ(⇀‸↼‶)ᕗ : %02d:%02d \n", minute, second); // Added padding
@@ -56,8 +61,8 @@ int pomodoro(int minute) {
 /*Time Break Functions for the short breaks */
 int timeBreak(int breakTime) {
     int second = SECOND_INITIAL;
-    notify("Pomodoro", "Break time! Relax a little.");
-    playSound("break.wav");
+    notify(NOTIF_TITLE, BREAK_NOTIF_MSG);
+    playSound(BREAK_AUDIO);
     while (second != -1) {
         clearScreen();
         printf("Break Time (◔‿◔) : %02d:%02d\n", breakTime, second); // Added padding
