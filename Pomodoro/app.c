@@ -8,8 +8,13 @@
 #define NOTIF_TITLE "Pomodoro"
 #define BREAK_NOTIF_MSG "Break time! Relax a little."
 #define POMODORO_NOTIF_MSG "Study time begins! Focus up."
+<<<<<<< HEAD
 #define START_AUDIO "/usr/local/share/pomodoro/start.wav"
 #define BREAK_AUDIO "/usr/local/share/pomodoro/break.wav"
+=======
+#define START_AUDIO "break.wav"
+#define BREAK_AUDIO "start.wav"
+>>>>>>> 7eacaf76662469f99b6114627d47a11a9cacf9ca
 
 
 // Function prototypes
