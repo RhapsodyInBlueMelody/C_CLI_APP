@@ -69,20 +69,47 @@ void extendBuffer(char ***buffer, int *rows, int *cols) {
 }
 
 void handleArrowKeys(char seq[], int rows, char **buffer, int cols) {
-	if (seq[0] == '[') {
-		switch (seq[1]) {
-			case 'B': if (cursorPos.row < rows - 1) cursorPos.row++; break;
-			case 'C': {
-				int textEnd = 0;
-				while (textEnd < cols && buffer[cursorPos.row][textEnd] != '\0') textEnd++;
-				if (cursorPos.cols < textEnd) cursorPos.cols++;
-				break;
-			}
-			case 'A': if (cursorPos.row > 0) cursorPos.row--; break;
-			case 'D': if (cursorPos.cols > 0) cursorPos.cols--; break;
-		}
-	}
+    if (seq[0] == '[') {
+        switch (seq[1]) {
+            case 'A': // Up arrow
+                if (cursorPos.row > 0) {
+                    cursorPos.row--;
+                    // Optionally, you can adjust cursorPos.cols if needed
+                }
+                break;
+            case 'B': // Down arrow
+                if (cursorPos.row < rows - 1) {
+                    cursorPos.row++;
+                    // Optionally, you can adjust cursorPos.cols if needed
+                }
+                break;
+            case 'C': // Right arrow
+                {
+                    int textEnd = 0;
+                    while (textEnd < cols && buffer[cursorPos.row][textEnd] != '\0') {
+                        textEnd++;
+                    }
+                    if (cursorPos.cols < textEnd) {
+                        cursorPos.cols++;
+                    }
+                }
+                break;
+            case 'D': // Left arrow
+                if (cursorPos.cols > 0) {
+                    cursorPos.cols--;
+                } else if (cursorPos.row > 0) {
+                    cursorPos.row--;
+                    int lastCol = 0;
+                    while (lastCol < cols && buffer[cursorPos.row][lastCol] != '\0') {
+                        lastCol++;
+                    }
+                    cursorPos.cols = lastCol; // Move to the end of the previous line
+                }
+                break;
+        }
+    }
 }
+
 
 void cursorMovement(char ***buffer, int *rows, int *cols, int input) {
 	if (input == ESC_KEY) {
@@ -113,7 +140,7 @@ void cursorMovement(char ***buffer, int *rows, int *cols, int input) {
 			extendBuffer(buffer, rows, cols);
 		}
 		if (cursorPos.cols >= *cols) {
-			*cols = cursorPos.cols + 10; // Increase by larger increment
+			*cols = cursorPos.cols + 10;
 			for (int i = 0; i < *rows; i++) {
 				(*buffer)[i] = realloc((*buffer)[i], (*cols + 1) * sizeof(char));
 				if (!(*buffer)[i]) clearAndExit("realloc");
@@ -128,7 +155,7 @@ void cursorMovement(char ***buffer, int *rows, int *cols, int input) {
 int main() {
 	cursorPos = (CursorPosition){0, 0};
 	int rows = 1;
-	int cols = 80; // Start with reasonable column width
+	int cols = 80;
 	char **buffer = malloc(rows * sizeof(char*));
 	buffer[0] = calloc(cols, sizeof(char));
 
@@ -139,7 +166,7 @@ int main() {
 	while (1) {
 		char c;
 		if (read(STDIN_FILENO, &c, 1) == -1 && errno != EAGAIN) clearAndExit("read");
-		if (c == CTRL_KEY('c')) break;
+		if (c == CTRL_KEY('q')) break;
 
 		cursorMovement(&buffer, &rows, &cols, c);
 		refreshScreen(buffer, rows, cols);

@@ -1,20 +1,23 @@
 # Welcome to my Pomodoro CLI!!
-  version 0.01v
+  *"Hey.. Take a break sometimes.. your body need rest too"* (っ˘з(˘⌣˘ )
 
-## TO_DO
-  Make Installer
+## Installation
+
+```
+git clone https://github.com/RhapsodyInBlueMelody/C_CLI_APP.git 
+
+cd C_CLI_APP/Pomodoro
+
+./install.sh
+```
+
 
 ## Usage
 
-1. Compile the app.c (except if you decided to rename it.. idk)
-``` 
-  gcc app.c -o <anyoutputname>
 ```
-  
-2. Running the cli
+  pomodoro <workminute> <breakminute>
 ```
-  ./<anyoutputname> <workminute> <breakminute>
-```
+
 ## Example
 ```
  ./pomodoro 25 5
